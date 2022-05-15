@@ -1,0 +1,38 @@
+PERETZ QUESTION - 25 MIN (5 IN GOOGLE)
+------------------------------------------------------
+ public static Map<Integer, List<String>> reservations = new HashMap<Integer, List<String>>();
+    public static Set<String> deleted_reservations = new HashSet<String>();
+    public static int ID = 0;
+
+    public static String gimmi_name(int people){
+        List<String> cur;
+        if(reservations.containsKey(people)){
+            cur = reservations.get(people);
+            while(cur.size() > 0) {
+                if(deleted_reservations.contains(cur.get(0))){
+                    deleted_reservations.remove(cur.get(0));
+                    cur.remove(0);
+                }
+                else
+                    break;
+            }
+            String name = cur.get(0);
+            cur.remove(0);
+            return name;
+        }
+        return "";
+    }
+    
+    public static void add_reservation(int people, String name){
+        if(reservations.containsKey(people)){
+            reservations.get(people).add(name+ID);
+        }
+        else{
+            reservations.put(people, new LinkedList(Arrays.asList(name + ID)));
+        }
+        ID++;
+    }
+    
+    public static void delete_reservation(String name_and_id){
+        deleted_reservations.add(name_and_id);
+    }
